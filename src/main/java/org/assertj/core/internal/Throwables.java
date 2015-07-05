@@ -19,6 +19,7 @@ import static org.assertj.core.error.ShouldHaveCauseExactlyInstance.shouldHaveCa
 import static org.assertj.core.error.ShouldHaveCauseInstance.shouldHaveCauseInstance;
 import static org.assertj.core.error.ShouldHaveMessage.shouldHaveMessage;
 import static org.assertj.core.error.ShouldHaveNoCause.shouldHaveNoCause;
+import static org.assertj.core.error.ShouldHaveNoSuppressedException.shouldHaveNoSuppressedException;
 import static org.assertj.core.error.ShouldHaveRootCauseExactlyInstance.shouldHaveRootCauseExactlyInstance;
 import static org.assertj.core.error.ShouldHaveRootCauseInstance.shouldHaveRootCauseInstance;
 import static org.assertj.core.error.ShouldStartWith.shouldStartWith;
@@ -218,6 +219,21 @@ public class Throwables {
 	Throwable rootCause = getRootCause(actual);
 	if (rootCause != null && type.equals(rootCause.getClass())) return;
 	throw failures.failure(info, shouldHaveRootCauseExactlyInstance(actual, type));
+  }
+
+  /**
+   * Asserts that the actual {@code Throwable} does not have any suppressed exception.
+   *
+   * @param info contains information about the assertion.
+   * @param actual the given {@code Throwable}.
+   * @throws AssertionError if the actual {@code Throwable} is {@code null}.
+   * @throws AssertionError if the actual {@code Throwable} has at least one suppressed exception.
+   */
+  public void assertHasNoSuppressedException(AssertionInfo info, Throwable actual) {
+    assertNotNull(info, actual);
+    Throwable[] suppressed = actual.getSuppressed();
+    if (suppressed.length == 0) return;
+    throw failures.failure(info, shouldHaveNoSuppressedException(actual));
   }
 
   private static void assertNotNull(AssertionInfo info, Throwable actual) {

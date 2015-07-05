@@ -258,4 +258,16 @@ public abstract class AbstractThrowableAssert<S extends AbstractThrowableAssert<
     throwables.assertHasRootCauseExactlyInstanceOf(info, actual, type);
     return myself;
   }
+
+  /**
+   * Verifies that the actual {@code Throwable} does not have any suppressed exception.
+   *
+   * @return this assertion object.
+   * @throws AssertionError if the actual {@code Throwable} is {@code null}.
+   * @throws AssertionError if the actual {@code Throwable} has one or more suppressed exceptions.
+   */
+  public S hasNoSuppressedException() {
+    throwables.assertHasNoSuppressedException(info, actual);
+    return myself;
+  }
 }
